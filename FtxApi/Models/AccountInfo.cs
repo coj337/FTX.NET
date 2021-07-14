@@ -1,53 +1,53 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class AccountInfo
     {
-        [JsonPropertyName("backstopProvider")]
+        [JsonProperty("backstopProvider")]
         public bool BackstopProvider { get; set; }
 
-        [JsonPropertyName("collateral")]
+        [JsonProperty("collateral")]
         public decimal Collateral { get; set; }
 
-        [JsonPropertyName("freeCollateral")]
+        [JsonProperty("freeCollateral")]
         public decimal FreeCollateral { get; set; }
 
-        [JsonPropertyName("initialMarginRequirement")]
+        [JsonProperty("initialMarginRequirement")]
         public decimal InitialMarginRequirement { get; set; }
 
-        [JsonPropertyName("liquidating")]
+        [JsonProperty("liquidating")]
         public bool Liquidating { get; set; }
 
-        [JsonPropertyName("maintenanceMarginRequirement")]
+        [JsonProperty("maintenanceMarginRequirement")]
         public decimal MaintenanceMarginRequirement { get; set; }
 
-        [JsonPropertyName("makerFee")]
+        [JsonProperty("makerFee")]
         public decimal MakerFee { get; set; }
 
-        [JsonPropertyName("marginFraction")]
+        [JsonProperty("marginFraction")]
         public decimal? MarginFraction { get; set; }
 
-        [JsonPropertyName("openMarginFraction")]
+        [JsonProperty("openMarginFraction")]
         public decimal? OpenMarginFraction { get; set; }
 
-        [JsonPropertyName("takerFee")]
+        [JsonProperty("takerFee")]
         public decimal TakerFee { get; set; }
 
-        [JsonPropertyName("totalAccountValue")]
+        [JsonProperty("totalAccountValue")]
         public decimal TotalAccountValue { get; set; }
 
-        [JsonPropertyName("totalPositionSize")]
+        [JsonProperty("totalPositionSize")]
         public decimal TotalPositionSize { get; set; }
 
-        [JsonPropertyName("username")]
+        [JsonProperty("username")]
         public string Username { get; set; }
 
-        [JsonPropertyName("leverage")]
+        [JsonProperty("leverage")]
         public decimal Leverage { get; set; }
 
-        [JsonPropertyName("positions")]
+        [JsonProperty("positions")]
         public List<Position> Positions { get; set; }
     }
 }

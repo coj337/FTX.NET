@@ -1,28 +1,29 @@
-﻿using System.Text.Json.Serialization;
+﻿
+using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class FutureStats
     {
-        [JsonPropertyName("volume")]
+        [JsonProperty("volume")]
         public decimal Volume { get; set; }
 
-        [JsonPropertyName("nextFundingRate")]
+        [JsonProperty("nextFundingRate")]
         public decimal NextFundingRate { get; set; }
 
-        [JsonPropertyName("nextFundingTime")]
+        [JsonProperty("nextFundingTime")]
         public string NextFundingTime { get; set; }
 
-        [JsonPropertyName("expirationPrice")]
+        [JsonProperty("expirationPrice")]
         public decimal ExpirationPrice { get; set; }
 
-        [JsonPropertyName("predictedExpirationPrice")]
+        [JsonProperty("predictedExpirationPrice")]
         public decimal PredictedExpirationPrice { get; set; }
 
-        [JsonPropertyName("openInterest")]
+        [JsonProperty("openInterest")]
         public decimal OpenInterest { get; set; }
 
-        [JsonPropertyName("strikePrice")]
+        [JsonProperty("strikePrice")]
         public decimal StrikePrice { get; set; }
     }
 }

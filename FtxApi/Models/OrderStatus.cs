@@ -1,56 +1,56 @@
 ﻿using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class OrderStatus
     {
-        [JsonPropertyName("createdAt")]
+        [JsonProperty("createdAt")]
         public DateTime CreatedAt { get; set; }
 
-        [JsonPropertyName("filledSize")]
+        [JsonProperty("filledSize")]
         public decimal? FilledSize { get; set; }
 
-        [JsonPropertyName("future")]
+        [JsonProperty("future")]
         public string Future { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public decimal? Id { get; set; }
 
-        [JsonPropertyName("market")]
+        [JsonProperty("market")]
         public string Market { get; set; }
 
-        [JsonPropertyName("price")]
+        [JsonProperty("price")]
         public decimal? Price { get; set; }
 
-        [JsonPropertyName("avgFillPrice")]
+        [JsonProperty("avgFillPrice")]
         public decimal? AvgFillPrice { get; set; }
 
-        [JsonPropertyName("remainingSize")]
+        [JsonProperty("remainingSize")]
         public decimal? RemainingSize { get; set; }
 
-        [JsonPropertyName("side")]
+        [JsonProperty("side")]
         public string Side { get; set; }
 
-        [JsonPropertyName("size")]
+        [JsonProperty("size")]
         public decimal? Size { get; set; }
 
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public string Status { get; set; }
 
-        [JsonPropertyName("type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
 
-        [JsonPropertyName("reduceOnly")]
+        [JsonProperty("reduceOnly")]
         public bool ReduceOnly { get; set; }
 
-        [JsonPropertyName("ioc")]
+        [JsonProperty("ioc")]
         public bool Ioc { get; set; }
 
-        [JsonPropertyName("postOnly")]
+        [JsonProperty("postOnly")]
         public bool PostOnly { get; set; }
 
-        [JsonPropertyName("clientId")]
+        [JsonProperty("clientId")]
         public string ClientId { get; set; }
     }
 }

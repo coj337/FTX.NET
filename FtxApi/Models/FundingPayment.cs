@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class FundingPayment
     {
-        [JsonPropertyName("future")]
+        [JsonProperty("future")]
         public string Future { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public decimal Id { get; set; }
 
-        [JsonPropertyName("payment")]
+        [JsonProperty("payment")]
         public decimal Payment { get; set; }
 
-        [JsonPropertyName("time")]
+        [JsonProperty("time")]
         public DateTime Time { get; set; }
     }
 }

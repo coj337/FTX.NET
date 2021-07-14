@@ -1,53 +1,56 @@
 ﻿
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class Position
     {
-        [JsonPropertyName("collateralUsed")]
+        [JsonProperty("collateralUsed")]
         public decimal? CollateralUsed { get; set; }
 
-        [JsonPropertyName("cost")]
+        [JsonProperty("cost")]
         public decimal? Cost { get; set; }
 
-        [JsonPropertyName("entryPrice")]
+        [JsonProperty("entryPrice")]
         public decimal? EntryPrice { get; set; }
 
-        [JsonPropertyName("estimatedLiquidationPrice")]
+        [JsonProperty("estimatedLiquidationPrice")]
         public decimal? EstimatedLiquidationPrice { get; set; }
 
-        [JsonPropertyName("future")]
+        [JsonProperty("future")]
         public string Future { get; set; }
 
-        [JsonPropertyName("initialMarginRequirement")]
+        [JsonProperty("initialMarginRequirement")]
         public decimal? InitialMarginRequirement { get; set; }
 
-        [JsonPropertyName("longOrderSize")]
+        [JsonProperty("longOrderSize")]
         public decimal? LongOrderSize { get; set; }
 
-        [JsonPropertyName("maintenanceMarginRequirement")]
+        [JsonProperty("maintenanceMarginRequirement")]
         public decimal? MaintenanceMarginRequirement { get; set; }
 
-        [JsonPropertyName("netSize")]
+        [JsonProperty("netSize")]
         public decimal? NetSize { get; set; }
 
-        [JsonPropertyName("openSize")]
+        [JsonProperty("openSize")]
         public decimal? OpenSize { get; set; }
 
-        [JsonPropertyName("realizedPnl")]
+        [JsonProperty("realizedPnl")]
         public decimal? RealizedPnl { get; set; }
 
-        [JsonPropertyName("shortOrderSize")]
+        [JsonProperty("shortOrderSize")]
         public decimal? ShortOrderSize { get; set; }
 
-        [JsonPropertyName("side")]
+        [JsonProperty("side")]
         public string Side { get; set; }
 
-        [JsonPropertyName("size")]
+        [JsonProperty("size")]
         public decimal? Size { get; set; }
 
-        [JsonPropertyName("unrealizedPnl")]
+        [JsonProperty("unrealizedPnl")]
         public decimal? UnrealizedPnl { get; set; }
+        
+        [JsonProperty("recentAverageOpenPrice")]
+        public decimal? AverageOpenPrice { get; set; }
     }
 }

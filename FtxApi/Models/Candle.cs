@@ -1,26 +1,28 @@
-﻿using System;
-using System.Text.Json.Serialization;
+﻿using Utf8Json;
+using System;
+using Newtonsoft.Json;
+
 
 namespace FtxApi.Models
 {
     public class Candle
     {
-        [JsonPropertyName("close")]
+        [JsonProperty("close")]
         public decimal Close { get; set; }
 
-        [JsonPropertyName("high")]
+        [JsonProperty("high")]
         public decimal High { get; set; }
 
-        [JsonPropertyName("low")]
+        [JsonProperty("low")]
         public decimal Low { get; set; }
 
-        [JsonPropertyName("open")]
+        [JsonProperty("open")]
         public decimal Open { get; set; }
 
-        [JsonPropertyName("startTime")]
+        [JsonProperty("startTime")]
         public DateTime StartTime { get; set; }
 
-        [JsonPropertyName("volume")]
+        [JsonProperty("volume")]
         public decimal Volume { get; set; }
     }
 }

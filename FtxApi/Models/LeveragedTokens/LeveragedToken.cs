@@ -1,37 +1,37 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FtxApi.Models.LeveragedTokens
 {
     public class LeveragedToken
     {
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
 
-        [JsonPropertyName("underlying")]
+        [JsonProperty("underlying")]
         public string Underlying { get; set; }
 
-        [JsonPropertyName("outstanding")]
+        [JsonProperty("outstanding")]
         public decimal Outstanding { get; set; }
 
-        [JsonPropertyName("pricePerShare")]
+        [JsonProperty("pricePerShare")]
         public decimal PricePerShare { get; set; }
 
-        [JsonPropertyName("positionPerShare")]
+        [JsonProperty("positionPerShare")]
         public decimal PositionPerShare { get; set; }
 
-        [JsonPropertyName("underlyingMark")]
+        [JsonProperty("underlyingMark")]
         public decimal UnderlyingMark { get; set; }
 
-        [JsonPropertyName("contractAddress")]
+        [JsonProperty("contractAddress")]
         public string ContractAddress { get; set; }
 
-        [JsonPropertyName("change1h")]
+        [JsonProperty("change1h")]
         public decimal Change1h { get; set; }
 
-        [JsonPropertyName("change24h")]
+        [JsonProperty("change24h")]
         public decimal Change24h { get; set; }
     }
 }

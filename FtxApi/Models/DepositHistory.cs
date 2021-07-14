@@ -1,41 +1,41 @@
 ﻿using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class DepositHistory
     {
-        [JsonPropertyName("coin")]
+        [JsonProperty("coin")]
         public string Coin { get; set; }
 
-        [JsonPropertyName("confirmations")]
+        [JsonProperty("confirmations")]
         public decimal Confirmations { get; set; }
 
-        [JsonPropertyName("confirmedTime")]
+        [JsonProperty("confirmedTime")]
         public DateTime ConfirmedTime { get; set; }
 
-        [JsonPropertyName("fee")]
+        [JsonProperty("fee")]
         public decimal Fee { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public decimal Id { get; set; }
 
-        [JsonPropertyName("sentTime")]
+        [JsonProperty("sentTime")]
         public DateTime SentTime { get; set; }
 
-        [JsonPropertyName("size")]
+        [JsonProperty("size")]
         public decimal Size { get; set; }
 
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public string Status { get; set; }
 
-        [JsonPropertyName("time")]
+        [JsonProperty("time")]
         public DateTime Time { get; set; }
 
-        [JsonPropertyName("txid")]
+        [JsonProperty("txid")]
         public string TxId { get; set; }
 
-        [JsonPropertyName("notes")]
+        [JsonProperty("notes")]
         public string Notes { get; set; }
     }
 }

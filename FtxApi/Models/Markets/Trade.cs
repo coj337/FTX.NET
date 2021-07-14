@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models.Markets
 {
     public class Trade
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public decimal Id { get; set; }
 
-        [JsonPropertyName("liquidation")]
+        [JsonProperty("liquidation")]
         public bool Liquidation { get; set; }
 
-        [JsonPropertyName("price")]
+        [JsonProperty("price")]
         public decimal Price { get; set; }
 
-        [JsonPropertyName("side")]
+        [JsonProperty("side")]
         public string Side { get; set; }
 
-        [JsonPropertyName("size")]
+        [JsonProperty("size")]
         public decimal Size { get; set; }
 
-        [JsonPropertyName("time")]
+        [JsonProperty("time")]
         public DateTime Time { get; set; }
     }
 }

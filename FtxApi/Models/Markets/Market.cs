@@ -1,43 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models.Markets
 {
     public class Market
     {
-        [JsonPropertyName("type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
 
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("underlying")]
+        [JsonProperty("underlying")]
         public string Underlying { get; set; }
 
-        [JsonPropertyName("baseCurrency")]
+        [JsonProperty("baseCurrency")]
         public string BaseCurreny { get; set; }
 
-        [JsonPropertyName("quoteCurrency")]
+        [JsonProperty("quoteCurrency")]
         public string QuoteCurrency { get; set; }
 
-        [JsonPropertyName("enabled")]
+        [JsonProperty("enabled")]
         public bool Enabled { get; set; }
 
-        [JsonPropertyName("ask")]
+        [JsonProperty("ask")]
         public decimal? Ask { get; set; }
 
-        [JsonPropertyName("bid")]
+        [JsonProperty("bid")]
         public decimal? Bid { get; set; }
 
-        [JsonPropertyName("last")]
+        [JsonProperty("last")]
         public decimal? Last { get; set; }
 
-        [JsonPropertyName("priceIncrement")]
+        [JsonProperty("priceIncrement")]
         public decimal? PriceIncrement { get; set; }
 
-        [JsonPropertyName("sizeIncrement")]
+        [JsonProperty("sizeIncrement")]
         public decimal? SizeIncrement { get; set; }
     }
 }

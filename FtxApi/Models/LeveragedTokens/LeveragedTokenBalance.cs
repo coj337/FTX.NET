@@ -1,13 +1,14 @@
-﻿using System.Text.Json.Serialization;
+﻿
+using Newtonsoft.Json;
 
 namespace FtxApi.Models.LeveragedTokens
 {
     public class LeveragedTokenBalance
     {
-        [JsonPropertyName("token")]
+        [JsonProperty("token")]
         public string Token { get; set; }
 
-        [JsonPropertyName("balance")]
+        [JsonProperty("balance")]
         public decimal Balance { get; set; }
     }
 }

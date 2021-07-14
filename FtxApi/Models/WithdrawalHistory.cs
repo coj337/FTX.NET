@@ -1,34 +1,34 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class WithdrawalHistory
     {
-        [JsonPropertyName("coin")]
+        [JsonProperty("coin")]
         public string Coin { get; set; }
 
-        [JsonPropertyName("address")]
+        [JsonProperty("address")]
         public string Address { get; set; }
 
-        [JsonPropertyName("tag")]
+        [JsonProperty("tag")]
         public string Tag { get; set; }
 
-        [JsonPropertyName("fee")]
+        [JsonProperty("fee")]
         public decimal Fee { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public decimal Id { get; set; }
 
-        [JsonPropertyName("size")]
+        [JsonProperty("size")]
         public decimal Size { get; set; }
 
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public string Status { get; set; }
 
-        [JsonPropertyName("time")]
+        [JsonProperty("time")]
         public string Time { get; set; }
 
-        [JsonPropertyName("txid")]
+        [JsonProperty("txid")]
         public string TxId { get; set; }
     }
 }

@@ -1,10 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class AccountLeverage
     {
-        [JsonPropertyName("leverage")]
+        [JsonProperty("leverage")]
         public int Leverage { get; set; }
     }
 }

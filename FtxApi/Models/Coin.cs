@@ -1,22 +1,22 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class Coin
     {
-        [JsonPropertyName("canDeposit")]
+        [JsonProperty("canDeposit")]
         public bool CanDeposit { get; set; }
 
-        [JsonPropertyName("canWithdraw")]
+        [JsonProperty("canWithdraw")]
         public bool CanWithdraw { get; set; }
 
-        [JsonPropertyName("hasTag")]
+        [JsonProperty("hasTag")]
         public bool HasTag { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public string Id { get; set; }
 
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
     }
 }

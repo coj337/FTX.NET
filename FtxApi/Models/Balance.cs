@@ -1,16 +1,16 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class Balance
     {
-        [JsonPropertyName("coin")]
+        [JsonProperty("coin")]
         public string Coin { get; set; }
 
-        [JsonPropertyName("free")]
+        [JsonProperty("free")]
         public decimal Free { get; set; }
 
-        [JsonPropertyName("total")]
+        [JsonProperty("total")]
         public decimal Total { get; set; }
     }
 }

@@ -1,14 +1,14 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class FtxResult<T>
     {
 
-        [JsonPropertyName("success")]
+        [JsonProperty("success")]
         public bool Success { get; set; }
 
-        [JsonPropertyName("result")]
+        [JsonProperty("result")]
         public T Result { get; set; }
     }
 }

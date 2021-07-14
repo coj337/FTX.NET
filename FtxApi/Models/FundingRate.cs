@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class FundingRate
     {
-        [JsonPropertyName("future")]
+        [JsonProperty("future")]
         public string Future { get; set; }
 
-        [JsonPropertyName("rate")]
+        [JsonProperty("rate")]
         public decimal Rate { get; set; }
 
-        [JsonPropertyName("time")]
+        [JsonProperty("time")]
         public DateTime Time { get; set; }
     }
 }

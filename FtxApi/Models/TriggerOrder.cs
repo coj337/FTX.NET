@@ -1,58 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models
 {
     public class TriggerOrder
     {
-        [JsonPropertyName("createdAt")]
+        [JsonProperty("createdAt")]
         public DateTime CreatedAt { get; set; }
 
-        [JsonPropertyName("future")]
+        [JsonProperty("future")]
         public string Future { get; set; }
 
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public decimal? Id { get; set; }
 
-        [JsonPropertyName("market")]
+        [JsonProperty("market")]
         public string Market { get; set; }
 
-        [JsonPropertyName("triggerPrice")]
+        [JsonProperty("triggerPrice")]
         public decimal? TriggerPrice { get; set; }
 
-        [JsonPropertyName("orderId")]
+        [JsonProperty("orderId")]
         public decimal? OrderId { get; set; }
 
-        [JsonPropertyName("side")]
+        [JsonProperty("side")]
         public string Side { get; set; }
 
-        [JsonPropertyName("size")]
+        [JsonProperty("size")]
         public decimal? Size { get; set; }
 
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public string Status { get; set; }
 
-        [JsonPropertyName("type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
 
-        [JsonPropertyName("orderPrice")]
+        [JsonProperty("orderPrice")]
         public decimal? OrderPrice { get; set; }
 
-        [JsonPropertyName("error")]
+        [JsonProperty("error")]
         public string Error { get; set; }
 
-        [JsonPropertyName("triggeredAt")]
+        [JsonProperty("triggeredAt")]
         public DateTime? TriggeredAt { get; set; }
 
-        [JsonPropertyName("reduceOnly")]
+        [JsonProperty("reduceOnly")]
         public bool ReduceOnly { get; set; }
 
-        [JsonPropertyName("orderType")]
+        [JsonProperty("orderType")]
         public string OrderType { get; set; }
 
-        [JsonPropertyName("retryUntilFilled")]
+        [JsonProperty("retryUntilFilled")]
         public bool RetryUntilFilled { get; set; }
     }
 }

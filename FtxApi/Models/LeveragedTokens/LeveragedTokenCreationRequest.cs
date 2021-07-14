@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models.LeveragedTokens
 {
     public class LeveragedTokenCreationRequest
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public decimal Id { get; set; }
 
-        [JsonPropertyName("token")]
+        [JsonProperty("token")]
         public string Token { get; set; }
 
-        [JsonPropertyName("requestedSize")]
+        [JsonProperty("requestedSize")]
         public decimal RequestedSize { get; set; }
 
-        [JsonPropertyName("pending")]
+        [JsonProperty("pending")]
         public bool Pending { get; set; }
 
-        [JsonPropertyName("cost")]
+        [JsonProperty("cost")]
         public decimal Cost { get; set; }
 
-        [JsonPropertyName("fee")]
+        [JsonProperty("fee")]
         public decimal Fee { get; set; }
 
-        [JsonPropertyName("requestedAt")]
+        [JsonProperty("requestedAt")]
         public DateTime RequestedAt { get; set; }
     }
 }

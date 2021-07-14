@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace FtxApi.Models.Markets
 {
     public class Orderbook
     {
-        [JsonPropertyName("bids")]
+        [JsonProperty("bids")]
         public List<List<decimal>> Bids { get; set; }
 
-        [JsonPropertyName("asks")]
+        [JsonProperty("asks")]
         public List<List<decimal>> Asks { get; set; }
     }
 }
