@@ -25,14 +25,13 @@ namespace FtxApi
         private readonly HMACSHA256 _hashMaker;
 
         private long _nonce;
-      
+
         public FtxRestApi(Client client)
         {
             _client = client;
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri(Url),
-                Timeout = TimeSpan.FromSeconds(30)
+                BaseAddress = new Uri(Url)
             };
 
             _hashMaker = new HMACSHA256(Encoding.UTF8.GetBytes(_client.ApiSecret));
@@ -88,21 +87,21 @@ namespace FtxApi
             {
                 var resultString = $"api/funding_rates";
                 var result = await CallAsync(HttpMethod.Get, resultString);
-                var deserializedResult =JsonConvert.DeserializeObject<FtxResult<List<FundingRate>>>(result);
+                var deserializedResult = JsonConvert.DeserializeObject<FtxResult<List<FundingRate>>>(result);
 
                 var rates = deserializedResult.Result;
                 resultLength = rates.Count();
 
-                if(resultLength != 0)
+                if (resultLength != 0)
                 {
                     allResults.AddRange(rates);
                     //end = rates.Last().Time.ToUniversalTime().AddMinutes(-1); //Set the end time to the earliest retrieved to get more
                 }
-            } 
-            while(resultLength == 500);
+            } while (resultLength == 500);
+
             return allResults;
         }
-        
+
         public async Task<List<FundingRate>> GetFundingRatesAsync(DateTime start, DateTime end)
         {
             List<FundingRate> allResults = new List<FundingRate>();
@@ -110,25 +109,30 @@ namespace FtxApi
 
             do
             {
-                var resultString = $"api/funding_rates?start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+                var resultString =
+                    $"api/funding_rates?start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
                 var result = await CallAsync(HttpMethod.Get, resultString);
-                var deserializedResult =JsonConvert.DeserializeObject<FtxResult<List<FundingRate>>>(result);
+                var deserializedResult = JsonConvert.DeserializeObject<FtxResult<List<FundingRate>>>(result);
 
                 var rates = deserializedResult.Result;
                 resultLength = rates.Count();
 
-                if(resultLength != 0)
+                if (resultLength != 0)
                 {
                     allResults.AddRange(rates);
-                    end = rates.Last().Time.ToUniversalTime().AddMinutes(-1); //Set the end time to the earliest retrieved to get more
+                    end = rates.Last().Time.ToUniversalTime()
+                        .AddMinutes(-1); //Set the end time to the earliest retrieved to get more
                 }
-            } while(resultLength == 500);
+            } while (resultLength == 500);
+
             return allResults;
         }
 
-        public async Task<FtxResult<List<Candle>>> GetHistoricalPricesAsync(string futureName, int resolution, int limit, DateTime start, DateTime end)
+        public async Task<FtxResult<List<Candle>>> GetHistoricalPricesAsync(string futureName, int resolution,
+            int limit, DateTime start, DateTime end)
         {
-            var resultString = $"api/futures/{futureName}/mark_candles?resolution={resolution}&limit={limit}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+            var resultString =
+                $"api/futures/{futureName}/mark_candles?resolution={resolution}&limit={limit}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
 
             var result = await CallAsync(HttpMethod.Get, resultString);
 
@@ -166,9 +170,11 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<Orderbook>>(result);
         }
 
-        public async Task<FtxResult<List<Trade>>> GetMarketTradesAsync(string marketName, int limit, DateTime start, DateTime end)
+        public async Task<FtxResult<List<Trade>>> GetMarketTradesAsync(string marketName, int limit, DateTime start,
+            DateTime end)
         {
-            var resultString = $"api/markets/{marketName}/trades?limit={limit}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+            var resultString =
+                $"api/markets/{marketName}/trades?limit={limit}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
 
             var result = await CallAsync(HttpMethod.Get, resultString);
 
@@ -192,7 +198,7 @@ namespace FtxApi
         public async Task<FtxResult<List<Position>>> GetPositionsAsync()
         {
             var resultString = $"api/positions";
-            
+
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["showAvgPrice"] = "true";
             var queryString = query.ToString();
@@ -200,16 +206,16 @@ namespace FtxApi
             var showAvgPriceEndpoint = $"{resultString}?{queryString}";
 
             var sign = GenerateSignature(HttpMethod.Get, $"/{showAvgPriceEndpoint}", "");
-            
+
             var result = await CallAsyncSign(HttpMethod.Get, showAvgPriceEndpoint, sign, "");
-            
+
             return JsonConvert.DeserializeObject<FtxResult<List<Position>>>(result);
         }
 
         public async Task<AccountLeverage> ChangeAccountLeverageAsync(int leverage)
         {
             var resultString = $"api/account/leverage";
-         
+
             var body = $"{{\"leverage\": {leverage}}}";
 
             var sign = GenerateSignature(HttpMethod.Post, "/api/account/leverage", body);
@@ -226,7 +232,7 @@ namespace FtxApi
         public async Task<FtxResult<List<Coin>>> GetCoinAsync()
         {
             var resultString = $"api/wallet/coins";
-           
+
             var sign = GenerateSignature(HttpMethod.Get, "/api/wallet/coins", "");
 
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
@@ -245,10 +251,22 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<List<Balance>>>(result);
         }
 
+        //Create array to hold sub accounts
+        // public async Task<FtxResult<List<Balance>>> GetAllBalancesAsync()
+        // {
+        //     var resultString = $"api/wallet/balances";
+        //
+        //     var sign = GenerateSignature(HttpMethod.Get, "/api/wallet/all_balances", "");
+        //
+        //     var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
+        //
+        //     return JsonConvert.DeserializeObject<FtxResult<List<Balance>>>(result);
+        // }
+
         public async Task<FtxResult<DepositAddress>> GetDepositAddressAsync(string coin)
         {
             var resultString = $"api/wallet/deposit_address/{coin}";
-            
+
             var sign = GenerateSignature(HttpMethod.Get, $"/api/wallet/deposit_address/{coin}", "");
 
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
@@ -278,18 +296,19 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<List<WithdrawalHistory>>>(result);
         }
 
-        public async Task<FtxResult<WithdrawalHistory>> RequestWithdrawalAsync(string coin, decimal size, string addr, string tag, string pass, string code)
+        public async Task<FtxResult<WithdrawalHistory>> RequestWithdrawalAsync(string coin, decimal size, string addr,
+            string tag, string pass, string code)
         {
             var resultString = $"api/wallet/withdrawals";
 
-            var body = $"{{"+
-                $"\"coin\": \"{coin}\"," +
-                $"\"size\": {size},"+
-                $"\"address\": \"{addr}\","+
-                $"\"tag\": {tag},"+
-                $"\"password\": \"{pass}\","+
-                $"\"code\": {code}" +
-                "}";
+            var body = $"{{" +
+                       $"\"coin\": \"{coin}\"," +
+                       $"\"size\": {size}," +
+                       $"\"address\": \"{addr}\"," +
+                       $"\"tag\": {tag}," +
+                       $"\"password\": \"{pass}\"," +
+                       $"\"code\": {code}" +
+                       "}";
 
             var sign = GenerateSignature(HttpMethod.Post, "/api/wallet/withdrawals", body);
 
@@ -302,7 +321,8 @@ namespace FtxApi
 
         #region Orders
 
-        public async Task<FtxResult<Order>> PlaceOrderAsync(string instrument, SideType side, decimal price, OrderType orderType, decimal amount, bool reduceOnly = false)
+        public async Task<FtxResult<Order>> PlaceOrderAsync(string instrument, SideType side, decimal price,
+            OrderType orderType, decimal amount, bool reduceOnly = false)
         {
             var path = $"api/orders";
 
@@ -320,7 +340,8 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<Order>>(result);
         }
 
-        public async Task<FtxResult<TriggerOrder>> PlaceStopOrderAsync(string instrument, SideType side, decimal triggerPrice, decimal amount, bool reduceOnly = false)
+        public async Task<FtxResult<TriggerOrder>> PlaceStopOrderAsync(string instrument, SideType side,
+            decimal triggerPrice, decimal amount, bool reduceOnly = false)
         {
             var path = $"api/conditional_orders";
 
@@ -338,7 +359,8 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<TriggerOrder>>(result);
         }
 
-        public async Task<FtxResult<TriggerOrder>> PlaceTrailingStopOrderAsync(string instrument, SideType side, decimal trailValue, decimal amount, bool reduceOnly = false)
+        public async Task<FtxResult<TriggerOrder>> PlaceTrailingStopOrderAsync(string instrument, SideType side,
+            decimal trailValue, decimal amount, bool reduceOnly = false)
         {
             var path = $"api/conditional_orders";
 
@@ -356,7 +378,8 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<TriggerOrder>>(result);
         }
 
-        public async Task<FtxResult<TriggerOrder>> PlaceTakeProfitOrderAsync(string instrument, SideType side, decimal triggerPrice, decimal amount, bool reduceOnly = false)
+        public async Task<FtxResult<TriggerOrder>> PlaceTakeProfitOrderAsync(string instrument, SideType side,
+            decimal triggerPrice, decimal amount, bool reduceOnly = false)
         {
             var path = $"api/conditional_orders";
 
@@ -379,7 +402,7 @@ namespace FtxApi
             var path = $"api/orders?market={instrument}";
 
             var sign = GenerateSignature(HttpMethod.Get, $"/api/orders?market={instrument}", "");
-           
+
             var result = await CallAsyncSign(HttpMethod.Get, path, sign);
 
             return JsonConvert.DeserializeObject<FtxResult<List<Order>>>(result);
@@ -448,7 +471,8 @@ namespace FtxApi
 
         public async Task<FtxResult<List<Fill>>> GetFillsAsync(string market, int limit, DateTime start, DateTime end)
         {
-            var resultString = $"api/fills?market={market}&limit={limit}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+            var resultString =
+                $"api/fills?market={market}&limit={limit}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
 
             var sign = GenerateSignature(HttpMethod.Get, $"/{resultString}", "");
 
@@ -463,7 +487,8 @@ namespace FtxApi
 
         public async Task<FtxResult<List<FundingPayment>>> GetFundingPaymentAsync(DateTime start, DateTime end)
         {
-            var resultString = $"api/funding_payments?start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+            var resultString =
+                $"api/funding_payments?start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
 
             var sign = GenerateSignature(HttpMethod.Get, $"/{resultString}", "");
 
@@ -516,10 +541,11 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<List<LeveragedTokenCreation>>>(result);
         }
 
-        public async Task<FtxResult<LeveragedTokenCreationRequest>> RequestLeveragedTokenCreationAsync(string tokenName, decimal size)
+        public async Task<FtxResult<LeveragedTokenCreationRequest>> RequestLeveragedTokenCreationAsync(string tokenName,
+            decimal size)
         {
             var resultString = $"api/lt/{tokenName}/create";
-          
+
             var body = $"{{\"size\": {size}}}";
 
             var sign = GenerateSignature(HttpMethod.Post, $"/api/lt/{tokenName}/create", body);
@@ -540,7 +566,8 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<List<LeveragedTokenRedemptionRequest>>>(result);
         }
 
-        public async Task<FtxResult<LeveragedTokenRedemption>> RequestLeveragedTokenRedemptionAsync(string tokenName, decimal size)
+        public async Task<FtxResult<LeveragedTokenRedemption>> RequestLeveragedTokenRedemptionAsync(string tokenName,
+            decimal size)
         {
             var resultString = $"api/lt/{tokenName}/redeem";
 
@@ -566,14 +593,15 @@ namespace FtxApi
                 request.Content = new StringContent(body, Encoding.UTF8, "application/json");
             }
 
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
-
-            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            return result;
+            using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            return await response.Content.ReadAsStringAsync();
+            //var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            //var result = await response.Content.ReadAsStringAsync();
+            //return result;
         }
 
-        private async Task<string> CallAsyncSign(HttpMethod method, string endpoint, string sign, string body = null)
+        private async Task<string> CallAsyncSign(HttpMethod method, string endpoint, string sign, string body = null,
+            string subaccount = null)
         {
             var request = new HttpRequestMessage(method, endpoint);
 
@@ -581,16 +609,16 @@ namespace FtxApi
             {
                 request.Content = new StringContent(body, Encoding.UTF8, "application/json");
             }
-            
+
             request.Headers.Add("FTX-KEY", _client.ApiKey);
             request.Headers.Add("FTX-SIGN", sign);
             request.Headers.Add("FTX-TS", _nonce.ToString());
 
-            var response = await _httpClient.SendAsync(request).ConfigureAwait(false);
+            if (subaccount?.Length > 0)
+                request.Headers.Add("FTX-SUBACCOUNT", Uri.EscapeUriString(subaccount));
 
-            var result = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            return result;
+            using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+            return await response.Content.ReadAsStringAsync();
         }
 
         private string GenerateSignature(HttpMethod method, string url, string requestBody)
@@ -609,9 +637,8 @@ namespace FtxApi
 
         private dynamic ParseResponce(string responce)
         {
-            return (dynamic)responce;
+            return (dynamic) responce;
         }
-
 
         #endregion
     }
