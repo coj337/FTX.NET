@@ -31,7 +31,8 @@ namespace FtxApi
             _client = client;
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri(Url)
+                BaseAddress = new Uri(Url),
+                Timeout = TimeSpan.FromMinutes(10)
             };
 
             _hashMaker = new HMACSHA256(Encoding.UTF8.GetBytes(_client.ApiSecret));
@@ -189,9 +190,7 @@ namespace FtxApi
         {
             var resultString = $"api/account";
             var sign = GenerateSignature(HttpMethod.Get, "/api/account", "");
-
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
-
             return JsonConvert.DeserializeObject<FtxResult<AccountInfo>>(result);
         }
 
@@ -606,19 +605,26 @@ namespace FtxApi
             var request = new HttpRequestMessage(method, endpoint);
 
             if (body != null)
-            {
                 request.Content = new StringContent(body, Encoding.UTF8, "application/json");
-            }
+
 
             request.Headers.Add("FTX-KEY", _client.ApiKey);
             request.Headers.Add("FTX-SIGN", sign);
             request.Headers.Add("FTX-TS", _nonce.ToString());
 
-            if (subaccount?.Length > 0)
+            if (subaccount != null)
                 request.Headers.Add("FTX-SUBACCOUNT", Uri.EscapeUriString(subaccount));
 
-            using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
-            return await response.Content.ReadAsStringAsync();
+            try
+            {
+                using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+                return await response.Content.ReadAsStringAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         private string GenerateSignature(HttpMethod method, string url, string requestBody)
