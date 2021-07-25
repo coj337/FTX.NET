@@ -24,11 +24,14 @@ namespace FtxApi
 
         private readonly HMACSHA256 _hashMaker;
 
+        private readonly string _subaccount;
+
         private long _nonce;
 
         public FtxRestApi(Client client)
         {
             _client = client;
+            _subaccount = _client.Subaccount;
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri(Url),
@@ -599,8 +602,7 @@ namespace FtxApi
             //return result;
         }
 
-        private async Task<string> CallAsyncSign(HttpMethod method, string endpoint, string sign, string body = null,
-            string subaccount = null)
+        private async Task<string> CallAsyncSign(HttpMethod method, string endpoint, string sign, string body = null)
         {
             var request = new HttpRequestMessage(method, endpoint);
 
@@ -612,8 +614,8 @@ namespace FtxApi
             request.Headers.Add("FTX-SIGN", sign);
             request.Headers.Add("FTX-TS", _nonce.ToString());
 
-            if (subaccount != null)
-                request.Headers.Add("FTX-SUBACCOUNT", Uri.EscapeUriString(subaccount));
+            if (_subaccount.Length > 0)
+                request.Headers.Add("FTX-SUBACCOUNT", Uri.EscapeUriString(_subaccount));
 
             try
             {
