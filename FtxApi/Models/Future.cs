@@ -15,7 +15,7 @@ namespace FtxApi.Models
         public string Description { get; set; }
 
         [JsonProperty("type")]
-        public TypeEnum Type { get; set; }
+        public FutureType FutureType { get; set; }
 
         [JsonProperty("expiry")]
         public DateTimeOffset? Expiry { get; set; }
@@ -104,5 +104,5 @@ namespace FtxApi.Models
     
     public enum Group { Daily, Monthly, Perpetual, Prediction, Quarterly, Weekly };
 
-    public enum TypeEnum { Future, Move, Perpetual, Prediction };
+    public enum FutureType { Future, Move, Perpetual, Prediction };
 }

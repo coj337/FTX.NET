@@ -82,14 +82,24 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<FutureStats>>(result);
         }
 
-        public async Task<List<FundingRate>> GetFundingRatesAsync()
+        public async Task<FtxResult<List<ExpiredFutures>>> GetExpiredFutures()
+        {
+            var resultString = $"api/expired_futures";
+
+            var result = await CallAsync(HttpMethod.Get, resultString);
+
+            return JsonConvert.DeserializeObject<FtxResult<List<ExpiredFutures>>>(result);
+        }
+
+        public async Task<List<FundingRate>> GetFundingRatesAsync(string market, DateTime start, DateTime end)
         {
             List<FundingRate> allResults = new List<FundingRate>();
             int resultLength;
 
             do
             {
-                var resultString = $"api/funding_rates";
+                var resultString =
+                    $"api/funding_rates?future{market}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
                 var result = await CallAsync(HttpMethod.Get, resultString);
                 var deserializedResult = JsonConvert.DeserializeObject<FtxResult<List<FundingRate>>>(result);
 
@@ -99,7 +109,8 @@ namespace FtxApi
                 if (resultLength != 0)
                 {
                     allResults.AddRange(rates);
-                    //end = rates.Last().Time.ToUniversalTime().AddMinutes(-1); //Set the end time to the earliest retrieved to get more
+                    end = rates.Last().Time.ToUniversalTime()
+                        .AddMinutes(-1); //Set the end time to the earliest retrieved to get more
                 }
             } while (resultLength == 500);
 
@@ -132,15 +143,58 @@ namespace FtxApi
             return allResults;
         }
 
-        public async Task<FtxResult<List<Candle>>> GetHistoricalPricesAsync(string futureName, int resolution,
-            int limit, DateTime start, DateTime end)
+        public async Task<List<Candle>> GetHistoricalPricesAsync(string marketName, int resolution, DateTime start,
+            DateTime end)
         {
-            var resultString =
-                $"api/futures/{futureName}/mark_candles?resolution={resolution}&limit={limit}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+            List<Candle> allResults = new List<Candle>();
+            int resultLength;
 
-            var result = await CallAsync(HttpMethod.Get, resultString);
+            do
+            {
+                var resultString =
+                    $"api/markets/{marketName}/candles?resolution={resolution}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+                var result = await CallAsync(HttpMethod.Get, resultString);
+                var deserializedResult = JsonConvert.DeserializeObject<FtxResult<List<Candle>>>(result);
 
-            return JsonConvert.DeserializeObject<FtxResult<List<Candle>>>(result);
+                var rates = deserializedResult.Result;
+                resultLength = rates.Count();
+
+                if (resultLength != 0)
+                {
+                    allResults.AddRange(rates);
+                    end = rates.Last().StartTime.ToUniversalTime()
+                        .AddMinutes(-1); //Set the end time to the earliest retrieved to get more
+                }
+            } while (resultLength == 500);
+
+            return allResults;
+        }
+
+        public async Task<List<Candle>> GetHistoricalIndexAsync(string indexName, int resolution, DateTime start,
+            DateTime end)
+        {
+            List<Candle> allResults = new List<Candle>();
+            int resultLength;
+
+            do
+            {
+                var resultString =
+                    $"api/indexes/{indexName}/candles?resolution={resolution}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+                var result = await CallAsync(HttpMethod.Get, resultString);
+                var deserializedResult = JsonConvert.DeserializeObject<FtxResult<List<Candle>>>(result);
+
+                var rates = deserializedResult.Result;
+                resultLength = rates.Count();
+
+                if (resultLength != 0)
+                {
+                    allResults.AddRange(rates);
+                    end = rates.Last().StartTime.ToUniversalTime()
+                        .AddMinutes(-1); //Set the end time to the earliest retrieved to get more
+                }
+            } while (resultLength == 500);
+
+            return allResults;
         }
 
         #endregion
@@ -174,15 +228,31 @@ namespace FtxApi
             return JsonConvert.DeserializeObject<FtxResult<Orderbook>>(result);
         }
 
-        public async Task<FtxResult<List<Trade>>> GetMarketTradesAsync(string marketName, int limit, DateTime start,
+        public async Task<List<Trade>> GetMarketTradesAsync(string marketName, DateTime start,
             DateTime end)
         {
-            var resultString =
-                $"api/markets/{marketName}/trades?limit={limit}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+            List<Trade> allResults = new List<Trade>();
+            int resultLength;
 
-            var result = await CallAsync(HttpMethod.Get, resultString);
+            do
+            {
+                var resultString =
+                    $"api/markets/{marketName}/trades?&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
+                var result = await CallAsync(HttpMethod.Get, resultString);
+                var deserializedResult = JsonConvert.DeserializeObject<FtxResult<List<Trade>>>(result);
 
-            return JsonConvert.DeserializeObject<FtxResult<List<Trade>>>(result);
+                var rates = deserializedResult.Result;
+                resultLength = rates.Count();
+
+                if (resultLength != 0)
+                {
+                    allResults.AddRange(rates);
+                    end = rates.Last().Time.ToUniversalTime()
+                        .AddMinutes(-1); //Set the end time to the earliest retrieved to get more
+                }
+            } while (resultLength == 5000);
+
+            return allResults;
         }
 
         #endregion
@@ -614,7 +684,7 @@ namespace FtxApi
             request.Headers.Add("FTX-SIGN", sign);
             request.Headers.Add("FTX-TS", _nonce.ToString());
 
-            if (_subaccount.Length > 0)
+            if (_subaccount != null)
                 request.Headers.Add("FTX-SUBACCOUNT", Uri.EscapeUriString(_subaccount));
 
             try
