@@ -41,12 +41,12 @@ namespace FtxApi
 
         public static string GetSubscribeRequest(string channel, string instrument)
         {
-            return $"{{\"op\": \"subscribe\", \"channel\": \"{channel}\", \"market\": \"{instrument}\"}}";
+            return $"{{\"op\": \"subscribe\", \"channel\": \"{channel}\", \"Market\": \"{instrument}\"}}";
         }
 
         public static string GetUnsubscribeRequest(string channel, string instrument)
         {
-            return $"{{\"op\": \"unsubscribe\", \"channel\": \"{channel}\", \"market\": \"{instrument}\"}}";
+            return $"{{\"op\": \"unsubscribe\", \"channel\": \"{channel}\", \"Market\": \"{instrument}\"}}";
         }
     }
 }

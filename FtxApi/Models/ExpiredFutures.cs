@@ -15,7 +15,7 @@ namespace FtxApi.Models
         public string Description { get; set; }
 
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
-        public FutureType FutureType { get; set; }
+        public FutureType? FutureType { get; set; }
 
         [JsonProperty("expiry", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? Expiry { get; set; }

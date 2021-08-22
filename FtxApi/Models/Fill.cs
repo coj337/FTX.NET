@@ -25,7 +25,7 @@ namespace FtxApi.Models
         [JsonProperty("liquidity")]
         public string Liquidity { get; set; }
 
-        [JsonProperty("market")]
+        [JsonProperty("Market")]
         public string Market { get; set; }
 
         [JsonProperty("baseCurrency")]

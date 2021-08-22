@@ -2,7 +2,10 @@
 {
     public enum OrderType : byte
     {
-        limit,
-        market
+        Limit,
+        Market,
+        Stop,
+        TrailingStop,
+        TakeProfit,
     }
 }

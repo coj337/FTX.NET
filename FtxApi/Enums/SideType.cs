@@ -1,8 +1,8 @@
 ﻿namespace FtxApi.Enums
 {
-    public enum SideType : byte
+    public enum SideType
     {
-        buy,
-        sell
+        Buy,
+        Sell
     }
 }

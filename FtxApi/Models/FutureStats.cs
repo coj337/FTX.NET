@@ -5,25 +5,25 @@ namespace FtxApi.Models
 {
     public class FutureStats
     {
-        [JsonProperty("volume")]
-        public decimal Volume { get; set; }
+        [JsonProperty("volume", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Volume { get; set; }
 
-        [JsonProperty("nextFundingRate")]
-        public decimal NextFundingRate { get; set; }
+        [JsonProperty("nextFundingRate", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? NextFundingRate { get; set; }
 
-        [JsonProperty("nextFundingTime")]
+        [JsonProperty("nextFundingTime", NullValueHandling = NullValueHandling.Ignore)]
         public string NextFundingTime { get; set; }
 
-        [JsonProperty("expirationPrice")]
-        public decimal ExpirationPrice { get; set; }
+        [JsonProperty("expirationPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? ExpirationPrice { get; set; }
 
-        [JsonProperty("predictedExpirationPrice")]
-        public decimal PredictedExpirationPrice { get; set; }
+        [JsonProperty("predictedExpirationPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? PredictedExpirationPrice { get; set; }
 
-        [JsonProperty("openInterest")]
-        public decimal OpenInterest { get; set; }
+        [JsonProperty("openInterest", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? OpenInterest { get; set; }
 
-        [JsonProperty("strikePrice")]
-        public decimal StrikePrice { get; set; }
+        [JsonProperty("strikePrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? StrikePrice { get; set; }
     }
 }

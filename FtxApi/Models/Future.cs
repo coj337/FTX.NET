@@ -5,101 +5,101 @@ namespace FtxApi.Models
 {
     public class Future
     {
-        [JsonProperty("name")]
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty("underlying")]
+        [JsonProperty("underlying", NullValueHandling = NullValueHandling.Ignore)]
         public string Underlying { get; set; }
 
-        [JsonProperty("description")]
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
 
-        [JsonProperty("type")]
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public FutureType FutureType { get; set; }
 
-        [JsonProperty("expiry")]
+        [JsonProperty("expiry", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? Expiry { get; set; }
 
-        [JsonProperty("perpetual")]
+        [JsonProperty("perpetual", NullValueHandling = NullValueHandling.Ignore)]
         public bool Perpetual { get; set; }
 
-        [JsonProperty("expired")]
+        [JsonProperty("expired", NullValueHandling = NullValueHandling.Ignore)]
         public bool Expired { get; set; }
 
-        [JsonProperty("enabled")]
+        [JsonProperty("enabled", NullValueHandling = NullValueHandling.Ignore)]
         public bool Enabled { get; set; }
 
-        [JsonProperty("postOnly")]
+        [JsonProperty("postOnly", NullValueHandling = NullValueHandling.Ignore)]
         public bool PostOnly { get; set; }
 
-        [JsonProperty("priceIncrement")]
-        public double PriceIncrement { get; set; }
+        [JsonProperty("priceIncrement", NullValueHandling = NullValueHandling.Ignore)]
+        public double? PriceIncrement { get; set; }
 
-        [JsonProperty("sizeIncrement")]
-        public double SizeIncrement { get; set; }
+        [JsonProperty("sizeIncrement", NullValueHandling = NullValueHandling.Ignore)]
+        public double? SizeIncrement { get; set; }
 
-        [JsonProperty("last")]
+        [JsonProperty("last", NullValueHandling = NullValueHandling.Ignore)]
         public double? Last { get; set; }
 
-        [JsonProperty("bid")]
+        [JsonProperty("bid", NullValueHandling = NullValueHandling.Ignore)]
         public double? Bid { get; set; }
 
-        [JsonProperty("ask")]
+        [JsonProperty("ask", NullValueHandling = NullValueHandling.Ignore)]
         public double? Ask { get; set; }
 
-        [JsonProperty("index")]
+        [JsonProperty("index", NullValueHandling = NullValueHandling.Ignore)]
         public double Index { get; set; }
 
-        [JsonProperty("mark")]
+        [JsonProperty("mark", NullValueHandling = NullValueHandling.Ignore)]
         public double Mark { get; set; }
 
-        [JsonProperty("imfFactor")]
+        [JsonProperty("imfFactor", NullValueHandling = NullValueHandling.Ignore)]
         public double ImfFactor { get; set; }
 
-        [JsonProperty("lowerBound")]
+        [JsonProperty("lowerBound", NullValueHandling = NullValueHandling.Ignore)]
         public double LowerBound { get; set; }
 
-        [JsonProperty("upperBound")]
+        [JsonProperty("upperBound", NullValueHandling = NullValueHandling.Ignore)]
         public double UpperBound { get; set; }
 
-        [JsonProperty("underlyingDescription")]
+        [JsonProperty("underlyingDescription", NullValueHandling = NullValueHandling.Ignore)]
         public string UnderlyingDescription { get; set; }
 
-        [JsonProperty("expiryDescription")]
+        [JsonProperty("expiryDescription", NullValueHandling = NullValueHandling.Ignore)]
         public string ExpiryDescription { get; set; }
 
-        [JsonProperty("moveStart")]
+        [JsonProperty("moveStart", NullValueHandling = NullValueHandling.Ignore)]
         public DateTimeOffset? MoveStart { get; set; }
 
-        [JsonProperty("marginPrice")]
-        public double MarginPrice { get; set; }
+        [JsonProperty("marginPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public double? MarginPrice { get; set; }
 
-        [JsonProperty("positionLimitWeight")]
-        public double PositionLimitWeight { get; set; }
+        [JsonProperty("positionLimitWeight", NullValueHandling = NullValueHandling.Ignore)]
+        public double? PositionLimitWeight { get; set; }
 
-        [JsonProperty("group")]
+        [JsonProperty("group", NullValueHandling = NullValueHandling.Ignore)]
         public Group Group { get; set; }
 
-        [JsonProperty("change1h")]
-        public double Change1H { get; set; }
+        [JsonProperty("change1h", NullValueHandling = NullValueHandling.Ignore)]
+        public double? Change1H { get; set; }
 
-        [JsonProperty("change24h")]
-        public double Change24H { get; set; }
+        [JsonProperty("change24h", NullValueHandling = NullValueHandling.Ignore)]
+        public double? Change24H { get; set; }
 
-        [JsonProperty("changeBod")]
-        public double ChangeBod { get; set; }
+        [JsonProperty("changeBod", NullValueHandling = NullValueHandling.Ignore)]
+        public double? ChangeBod { get; set; }
 
-        [JsonProperty("volumeUsd24h")]
-        public double VolumeUsd24H { get; set; }
+        [JsonProperty("volumeUsd24h", NullValueHandling = NullValueHandling.Ignore)]
+        public double? VolumeUsd24H { get; set; }
 
-        [JsonProperty("volume")]
-        public double Volume { get; set; }
+        [JsonProperty("volume", NullValueHandling = NullValueHandling.Ignore)]
+        public double? Volume { get; set; }
 
-        [JsonProperty("openInterest")]
-        public double OpenInterest { get; set; }
+        [JsonProperty("openInterest", NullValueHandling = NullValueHandling.Ignore)]
+        public double? OpenInterest { get; set; }
 
-        [JsonProperty("openInterestUsd")]
-        public double OpenInterestUsd { get; set; }
+        [JsonProperty("openInterestUsd", NullValueHandling = NullValueHandling.Ignore)]
+        public double? OpenInterestUsd { get; set; }
     }
     
     public enum Group { Daily, Monthly, Perpetual, Prediction, Quarterly, Weekly };

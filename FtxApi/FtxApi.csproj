@@ -5,6 +5,10 @@
     <TargetFrameworks>net5.0;net5.0-windows</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="LibLog" Version="5.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />

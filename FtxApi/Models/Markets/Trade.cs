@@ -7,22 +7,22 @@ namespace FtxApi.Models.Markets
 {
     public class Trade
     {
-        [JsonProperty("id")]
-        public decimal Id { get; set; }
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Id { get; set; }
 
-        [JsonProperty("liquidation")]
-        public bool Liquidation { get; set; }
+        [JsonProperty("liquidation", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? Liquidation { get; set; }
 
-        [JsonProperty("price")]
-        public decimal Price { get; set; }
+        [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Price { get; set; }
 
-        [JsonProperty("side")]
+        [JsonProperty("side", NullValueHandling = NullValueHandling.Ignore)]
         public string Side { get; set; }
 
-        [JsonProperty("size")]
-        public decimal Size { get; set; }
+        [JsonProperty("size", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? Size { get; set; }
 
-        [JsonProperty("time")]
+        [JsonProperty("time", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime Time { get; set; }
     }
 }

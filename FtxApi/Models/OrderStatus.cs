@@ -17,7 +17,7 @@ namespace FtxApi.Models
         [JsonProperty("id")]
         public decimal? Id { get; set; }
 
-        [JsonProperty("market")]
+        [JsonProperty("Market")]
         public string Market { get; set; }
 
         [JsonProperty("price")]
