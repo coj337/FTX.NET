@@ -16,7 +16,7 @@ namespace FtxApi.Models
         public decimal? Price { get; set; }
 
         [JsonProperty("size", NullValueHandling = NullValueHandling.Ignore)]
-        public decimal Size { get; set; }
+        public decimal? Size { get; set; }
 
         [JsonProperty("triggerPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? TriggerPrice { get; set; }
@@ -46,6 +46,8 @@ namespace FtxApi.Models
         public bool? RetryUntilFilled { get; set; }
 
         public DateTime Timestamp { get; set; }
+        [JsonProperty("quoteSize", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal? QuoteSize => (Price??0) * (Size??0);
 
         public CreateOrder(string market, SideType side, OrderType orderType, decimal triggerPrice, decimal amount,
             bool reduceOnly = false)
