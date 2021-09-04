@@ -8,7 +8,7 @@ namespace FtxApi.Models
 {
     public class Order
     {
-        [JsonProperty("createdAt")] public DateTime CreatedAt { get; set; }
+        [JsonProperty("createdAt")] public DateTime? CreatedAt { get; set; }
 
         [JsonProperty("filledSize")] public decimal? FilledSize { get; set; }
 
@@ -28,13 +28,13 @@ namespace FtxApi.Models
 
         [JsonProperty("status")] public string Status { get; set; }
 
-        [JsonProperty("type")] public OrderType Type { get; set; }
+        [JsonProperty("type")] public OrderType? Type { get; set; }
 
-        [JsonProperty("reduceOnly")] public bool ReduceOnly { get; set; }
+        [JsonProperty("reduceOnly")] public bool? ReduceOnly { get; set; }
 
-        [JsonProperty("ioc")] public bool Ioc { get; set; }
+        [JsonProperty("ioc")] public bool? Ioc { get; set; }
 
-        [JsonProperty("postOnly")] public bool PostOnly { get; set; }
+        [JsonProperty("postOnly")] public bool? PostOnly { get; set; }
 
         [JsonProperty("clientId")] public string ClientId { get; set; }
 

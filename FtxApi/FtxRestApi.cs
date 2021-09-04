@@ -166,6 +166,9 @@ namespace FtxApi
                 var resultString =
                     $"api/markets/{marketName}/candles?resolution={resolution}&start_time={Util.Util.GetSecondsFromEpochStart(start)}&end_time={Util.Util.GetSecondsFromEpochStart(end)}";
                 var result = await CallAsync(HttpMethod.Get, resultString);
+
+                if (result == null) throw new ArgumentNullException(nameof(result));
+
                 var deserializedResult = JsonConvert.DeserializeObject<FtxResult<List<Candle>>>(result);
 
                 if (deserializedResult == null) continue;
@@ -413,7 +416,7 @@ namespace FtxApi
 
         #region Orders
 
-        public async Task<FtxResult<Order>> PlaceOrderAsync(string instrument, SideType side, decimal price,
+        public async Task<FtxResult<Order>> PlaceOrderAsync(string instrument, SideType side, decimal? price,
             OrderType orderType, decimal amount, string clientId = "", bool ioc = false, bool postOnly = false,
             bool reduceOnly = false)
         {
@@ -570,7 +573,7 @@ namespace FtxApi
 
             var result = await CallAsyncSign(HttpMethod.Get, path, sign);
 
-            return JsonConvert.DeserializeObject<FtxResult<List<Order>>>(result);
+            return result == null ? null : JsonConvert.DeserializeObject<FtxResult<List<Order>>>(result);
         }
 
         public async Task<FtxResult<OrderStatus>> GetOrderStatusAsync(string id)
@@ -581,7 +584,7 @@ namespace FtxApi
 
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
 
-            return JsonConvert.DeserializeObject<FtxResult<OrderStatus>>(result);
+            return result == null ? null :  JsonConvert.DeserializeObject<FtxResult<OrderStatus>>(result);
         }
 
         public async Task<FtxResult<Order>> GetOrderStatusByClientIdAsync(string clientOrderId)
@@ -665,7 +668,7 @@ namespace FtxApi
 
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
 
-            return JsonConvert.DeserializeObject<FtxResult<List<Fill>>>(result);
+            return result == null ? null :  JsonConvert.DeserializeObject<FtxResult<List<Fill>>>(result);
         }
 
         #endregion
@@ -681,12 +684,67 @@ namespace FtxApi
 
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
 
-            return JsonConvert.DeserializeObject<FtxResult<List<FundingPayment>>>(result);
+            return result == null ? null :  JsonConvert.DeserializeObject<FtxResult<List<FundingPayment>>>(result);
         }
 
         #endregion
 
         #region Leveraged Tokens
+
+        public async Task<FtxResult<RequestQuoteResponse>> ConvertRequestQuote(string fromCoin, string toCoin,
+            decimal sizeOfFromCoin)
+        {
+            var resultString = $"api/otc/quotes";
+
+            var body = new ConvertCoinRequest()
+            {
+                FromCoin = fromCoin,
+                ToCoin = toCoin,
+                Size = sizeOfFromCoin
+            };
+
+            var serialize = JsonConvert.SerializeObject(body, new StringEnumConverter(true));
+
+            var sign = GenerateSignature(HttpMethod.Post, $"/{resultString}", serialize);
+
+            var result = await CallAsyncSign(HttpMethod.Post, resultString, sign, serialize);
+
+            return JsonConvert.DeserializeObject<FtxResult<RequestQuoteResponse>>(result);
+        }
+
+        public async Task<FtxResult<GetQuoteStatusResponse>> ConvertGetQuoteStatus(long quoteId, string market = null)
+        {
+            var resultString = $"api/otc/quotes/{quoteId}";
+
+            var body = new QuoteStatusRequest()
+            {
+                Market = market
+            };
+
+            if (market == null)
+            {
+                body = null;
+            }
+
+            var serialize = JsonConvert.SerializeObject(body, new StringEnumConverter(true));
+
+            var sign = GenerateSignature(HttpMethod.Get, $"/{resultString}", serialize);
+
+            var result = await CallAsyncSign(HttpMethod.Get, resultString, sign, serialize);
+
+            return JsonConvert.DeserializeObject<FtxResult<GetQuoteStatusResponse>>(result);
+        }
+
+        public async Task<FtxResult<AcceptQuoteResponse>> ConvertAcceptQuote(long? quoteId)
+        {
+            var resultString = $"api/otc/quotes/{quoteId}/accept";
+
+            var sign = GenerateSignature(HttpMethod.Post, $"/{resultString}", "");
+
+            var result = await CallAsyncSign(HttpMethod.Post, resultString, sign);
+
+            return JsonConvert.DeserializeObject<FtxResult<AcceptQuoteResponse>>(result);
+        }
 
         public async Task<FtxResult<List<LeveragedToken>>> GetLeveragedTokensListAsync()
         {

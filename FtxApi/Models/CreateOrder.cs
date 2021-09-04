@@ -73,7 +73,7 @@ namespace FtxApi.Models
             ReduceOnly = reduceOnly;
         }
 
-        public CreateOrder(string market, SideType side, decimal price,
+        public CreateOrder(string market, SideType side, decimal? price,
             OrderType orderType, decimal amount, string clientId = "", bool ioc = false, bool postOnly = false,
             bool reduceOnly = false)
         {
