@@ -584,7 +584,7 @@ namespace FtxApi
 
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
 
-            return result == null ? null :  JsonConvert.DeserializeObject<FtxResult<OrderStatus>>(result);
+            return result == null ? null : JsonConvert.DeserializeObject<FtxResult<OrderStatus>>(result);
         }
 
         public async Task<FtxResult<Order>> GetOrderStatusByClientIdAsync(string clientOrderId)
@@ -668,7 +668,7 @@ namespace FtxApi
 
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
 
-            return result == null ? null :  JsonConvert.DeserializeObject<FtxResult<List<Fill>>>(result);
+            return result == null ? null : JsonConvert.DeserializeObject<FtxResult<List<Fill>>>(result);
         }
 
         #endregion
@@ -684,7 +684,7 @@ namespace FtxApi
 
             var result = await CallAsyncSign(HttpMethod.Get, resultString, sign);
 
-            return result == null ? null :  JsonConvert.DeserializeObject<FtxResult<List<FundingPayment>>>(result);
+            return result == null ? null : JsonConvert.DeserializeObject<FtxResult<List<FundingPayment>>>(result);
         }
 
         #endregion
@@ -936,8 +936,17 @@ namespace FtxApi
         {
             _nonce = GetNonce();
             var signature = $"{_nonce}{method.ToString().ToUpper()}{url}{requestBody}";
-            var hash = _hashMaker.ComputeHash(Encoding.UTF8.GetBytes(signature));
-            var hashStringBase64 = BitConverter.ToString(hash).Replace("-", string.Empty);
+            string hashStringBase64;
+            try
+            {
+                var hash = _hashMaker.ComputeHash(Encoding.UTF8.GetBytes(signature));
+                hashStringBase64 = BitConverter.ToString(hash).Replace("-", string.Empty);
+            }
+            catch (AccessViolationException e)
+            {
+                Log.Error(e, "Hash maker access violation error AGAIN??");
+                throw;
+            }
             return hashStringBase64.ToLower();
         }
 
